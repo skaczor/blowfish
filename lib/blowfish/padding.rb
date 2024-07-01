@@ -2,7 +2,7 @@ require 'blowfish'
 
 module Blowfish
   module Padding
-    MODES = [:none, :spaces, :ansi_x923]
+    MODES = [:none, :spaces, :ansi_x923, :pkcs5]
 
     def self.pad(s, mode = nil)
       mode ||= :ansi_x923
@@ -20,6 +20,8 @@ module Blowfish
         s += 0.chr * (l - 1) + l.chr
       when :spaces
         s += ' ' * l
+      when :pkcs5
+        s += l.chr * l
       end
       s
     end
